@@ -8,7 +8,7 @@ type BuscarPersonajeEvent = (event: React.ChangeEvent<HTMLInputElement>) => void
 interface PropsFiltros {
   buscarPersonaje: BuscarPersonajeEvent;
   valor: string;
-  inputRef: React.RefObject<HTMLInputElement> | null;
+  inputRef:React.RefObject<HTMLInputElement>
 }
 const Filtros = ({ buscarPersonaje, valor, inputRef }: PropsFiltros) => {
   const nombreInput = 'nombre';

@@ -1,4 +1,4 @@
-import { Character } from "../redux/mortySlice";
+import { Character } from "../../redux/mortySlice";
 import './grilla-personajes.css';
 import TarjetaPersonaje from './tarjeta-personaje.componente';
 import PropTypes from 'prop-types';

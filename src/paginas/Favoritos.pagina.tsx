@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import GrillaPersonajes from "../componentes/personajes/grilla-personajes.componente";
-import { useAppDispatch, useAppSelector } from "../componentes/redux/hooks";
-import { agregarFvoritos, limpiarFavoritos } from "../componentes/redux/mortySlice";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { agregarFvoritos, limpiarFavoritos } from "../redux/mortySlice";
 
 /**
  * Esta es la pagina de favoritos. Aquí se deberan ver todos los personajes marcados como favoritos

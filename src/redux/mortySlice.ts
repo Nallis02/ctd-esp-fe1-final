@@ -57,20 +57,37 @@ export const getCharacterMorty = createAsyncThunk(
   }
 );
 
-export const getPersonajesName = createAsyncThunk(
-  "personaje/getPersonajesName",
-  async (name: string) => {
-    const response = await fetch(
-      `https://rickandmortyapi.com/api/character/?name=${name}`
-    );
-    const parseRes = await response.json();
-    if (!response.ok) {
-      throw new Error("Pagina no encontrada");
-    }
-    return parseRes;
-  }
-);
+// export const getPersonajesName = createAsyncThunk(
+//   "personaje/getPersonajesName",
+//   async (name: string) => {
+//     const response = await fetch(
+//       `https://rickandmortyapi.com/api/character/?name=${name}`
+//     );
+//     const parseRes = await response.json();
+//     if (!response.ok) {
+//       throw new Error("Pagina no encontrada");
+//     }
+//     return parseRes;
+//   }
+// );
 
+const getPersonajesFiltrados = async (name: string, page: number) => {
+  const response = await fetch(`https://rickandmortyapi.com/api/character/?page=${page}&name=${name}`);
+  if (response.ok) {
+      const data = await response.json();
+      return data
+  } else {
+      throw new Error('Pagina no encontrada')
+  }
+}
+
+export const getPersonajesName = createAsyncThunk(
+  'personaje/getPersonajesName',
+  async ({name, page}:{name: string, page: number}) => {
+      const response = await getPersonajesFiltrados(name, page)
+      return response
+  }
+)
 
 const initialState: InitialStateType = {
   input: "",
@@ -102,26 +119,32 @@ const characterSlice = createSlice({
     builder
       .addCase(getCharacterMorty.pending, (state) => {
         state.loading = true
+        state.personajes = initialState.personajes;
+        state.error = initialState.error
       })
       .addCase(getCharacterMorty.fulfilled, (state, action) => {
         state.loading = false
         state.personajes = action.payload.results
         state.data = action.payload.info
+        state.error = initialState.error
       })
       .addCase(getCharacterMorty.rejected, (state) => {
         state.loading = false
         state.personajes = []
+        state.error = initialState.error
       })
       .addCase(getPersonajesName.pending, (state) => {
         state.loading = true
         state.personajes = []
+        state.error = initialState.error
       })
       .addCase(getPersonajesName.fulfilled, (state, action) => {
         state.loading = false
         state.personajes = action.payload.results
         state.data = action.payload.info
+        state.error = initialState.error
       })
-      .addCase(getPersonajesName.rejected, (state, action) => {
+      .addCase(getPersonajesName.rejected, (state) => {
         state.data.pages = 1
         state.loading = false
         state.error = true
