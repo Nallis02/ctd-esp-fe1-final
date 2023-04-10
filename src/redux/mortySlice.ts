@@ -57,20 +57,6 @@ export const getCharacterMorty = createAsyncThunk(
   }
 );
 
-// export const getPersonajesName = createAsyncThunk(
-//   "personaje/getPersonajesName",
-//   async (name: string) => {
-//     const response = await fetch(
-//       `https://rickandmortyapi.com/api/character/?name=${name}`
-//     );
-//     const parseRes = await response.json();
-//     if (!response.ok) {
-//       throw new Error("Pagina no encontrada");
-//     }
-//     return parseRes;
-//   }
-// );
-
 const getPersonajesFiltrados = async (name: string, page: number) => {
   const response = await fetch(`https://rickandmortyapi.com/api/character/?page=${page}&name=${name}`);
   if (response.ok) {
